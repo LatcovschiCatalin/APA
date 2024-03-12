@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 
 
 # Implement sorting algorithms
@@ -105,7 +106,7 @@ def shell_sort(arr, iterations):
         gap //= 2
 
 
-array_lengths = [10, 50, 100, 500, 1000]
+array_lengths = list(range(1, 1001, 25))
 quick_sort_iterations = []
 merge_sort_iterations = []
 heap_sort_iterations = []
@@ -144,4 +145,77 @@ plt.plot(array_lengths, shell_sort_iterations, label='Shell Sort', marker='d')
 plt.xlabel('Array Length')
 plt.ylabel('Number of Iterations')
 plt.title('Number of Iterations for Different Sorting Algorithms')
+plt.show()
+
+# Initialize lists to store execution times
+quick_sort_times = []
+merge_sort_times = []
+heap_sort_times = []
+shell_sort_times = []
+
+for length in array_lengths:
+    arr = np.random.randint(1, 1000, length).tolist()
+
+    # Measure Quick Sort time
+    start_time = time.time()
+    iterations = [0]
+    quick_sort(arr.copy(), 0, length - 1, iterations)
+    end_time = time.time()
+    quick_sort_times.append(end_time - start_time)
+
+    # Measure Merge Sort time
+    start_time = time.time()
+    iterations = [0]
+    merge_sort(arr.copy(), iterations)
+    end_time = time.time()
+    merge_sort_times.append(end_time - start_time)
+
+    # Measure Heap Sort time
+    start_time = time.time()
+    iterations = [0]
+    heap_sort(arr.copy(), iterations)
+    end_time = time.time()
+    heap_sort_times.append(end_time - start_time)
+
+    # Measure Shell Sort time
+    start_time = time.time()
+    iterations = [0]
+    shell_sort(arr.copy(), iterations)
+    end_time = time.time()
+    shell_sort_times.append(end_time - start_time)
+
+# Plot for Quick Sort
+plt.figure(figsize=[12, 8])
+plt.plot(array_lengths, quick_sort_times, label='Quick Sort', marker='o')
+plt.xlabel('Array Length')
+plt.ylabel('Execution Time (s)')
+plt.title('Execution Time for Quick Sort')
+plt.legend()
+plt.show()
+
+# Plot for Merge Sort
+plt.figure(figsize=[12, 8])
+plt.plot(array_lengths, merge_sort_times, label='Merge Sort', marker='s')
+plt.xlabel('Array Length')
+plt.ylabel('Execution Time (s)')
+plt.title('Execution Time for Merge Sort')
+plt.legend()
+plt.show()
+
+# Plot for Heap Sort
+plt.figure(figsize=[12, 8])
+plt.plot(array_lengths, heap_sort_times, label='Heap Sort', marker='^')
+plt.xlabel('Array Length')
+plt.ylabel('Execution Time (s)')
+plt.title('Execution Time for Heap Sort')
+plt.legend()
+plt.show()
+
+# Plot for Shell Sort
+plt.figure(figsize=[12, 8])
+plt.plot(array_lengths, shell_sort_times, label='Shell Sort', marker='d')
+plt.xlabel('Array Length')
+plt.ylabel('Execution Time (s)')
+plt.title('Execution Time for Shell Sort')
+plt.legend()
 plt.show()
